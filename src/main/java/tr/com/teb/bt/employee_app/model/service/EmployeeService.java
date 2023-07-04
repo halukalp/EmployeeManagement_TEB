@@ -5,6 +5,7 @@ import tr.com.teb.bt.employee_app.model.entity.Employee;
 import tr.com.teb.bt.employee_app.utility.Util;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class EmployeeService extends AbstractEmployeeService
 {
@@ -24,19 +25,30 @@ public class EmployeeService extends AbstractEmployeeService
         return null;
     }
 
-    @Override
-    public void deleteByID(Integer id) {
 
+    @Override
+    public Employee findByID(Integer id)
+    {
+        return employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Entity is not found"));
     }
 
     @Override
-    public Employee findByID(Integer id) {
-        return null;
+    public void deleteByID(Integer id)
+    {
+        try
+        {
+            employeeRepository.deleteById(id);
+        }
+        catch (IllegalArgumentException e)
+        {
+            Util.showGeneralExceptionInfo(e);
+        }
     }
 
     @Override
-    public List<Employee> getAll() {
-        return null;
+    public List<Employee> getAll()
+    {
+        return employeeRepository.findAll();
     }
 
     @Override
