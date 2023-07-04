@@ -1,6 +1,8 @@
 package tr.com.teb.bt.employee_app.model.service;
 
+import org.springframework.dao.OptimisticLockingFailureException;
 import tr.com.teb.bt.employee_app.model.entity.Employee;
+import tr.com.teb.bt.employee_app.utility.Util;
 
 import java.util.List;
 
@@ -38,7 +40,21 @@ public class EmployeeService extends AbstractEmployeeService
     }
 
     @Override
-    public Employee insert(Employee entity) {
-        return null;
+    public Employee insert(Employee entity)
+    {
+        try
+        {
+            return employeeRepository.save(entity);
+        }
+        catch (IllegalArgumentException e)
+        {
+            Util.showGeneralExceptionInfo(e);
+            return null;
+        }
+        catch (OptimisticLockingFailureException e)
+        {
+            Util.showGeneralExceptionInfo(e);
+            return null;
+        }
     }
 }
