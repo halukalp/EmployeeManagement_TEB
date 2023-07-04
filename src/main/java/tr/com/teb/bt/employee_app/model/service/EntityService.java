@@ -1,15 +1,17 @@
 package tr.com.teb.bt.employee_app.model.service;
 
-public interface EntityService
+import java.util.List;
+
+public interface EntityService<E, I>
 {
-//    update();
-//
-//    deleteByID();
-//
-//    findByID();
-//
-//    getAll();
-//
-//    insert();
+    E update(E entity);
+
+    void deleteByID(I id);
+
+    E findByID(I id);
+
+    List<E> getAll();
+
+    E insert(E entity);
 }
 
